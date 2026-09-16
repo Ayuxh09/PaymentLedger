@@ -1,1 +1,106 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PaymentLedger</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"></head><body><header><b>Payment<span>Ledger</span></b><a href="{{url_for('login')}}">Owner Login</a></header><main class="narrow"><div class="eyebrow">PAYMENT SUBMISSION</div><h1>Submit your payment</h1><p class="muted">Upload your payment screenshot and enter what you purchased.</p>{% with messages=get_flashed_messages(with_categories=true) %}{% for c,m in messages %}<div class="alert {{c}}">{{m}}</div>{% endfor %}{% endwith %}{% if submitted %}<section class="card success"><div class="check">✓</div><h2>Payment submitted successfully</h2><p class="muted">Your payment has been recorded.</p><strong>Record ID: #{{record_id}}</strong><br><br><a class="btn" href="{{url_for('user')}}">Submit another</a></section>{% else %}<form class="card" method="post" enctype="multipart/form-data"><label>Payment Screenshot</label><input type="file" name="payment_image" accept="image/*" required><label>What Did You Purchase?</label><input type="text" name="purchase" placeholder="e.g. T-shirt, groceries, subscription" required><button class="btn full">Submit Payment</button></form>{% endif %}</main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PaymentLedger</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <b>Payment<span>Ledger</span></b>
+
+    <!-- FIX: endpoint is owner_login, not login -->
+    <a href="{{ url_for('owner_login') }}">Owner Login</a>
+</header>
+
+<main class="narrow">
+
+    <div class="eyebrow">PAYMENT SUBMISSION</div>
+
+    <h1>Submit your payment</h1>
+
+    <p class="muted">
+        Upload your payment screenshot and enter what you purchased.
+    </p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for c, m in messages %}
+            <div class="alert {{ c }}">{{ m }}</div>
+        {% endfor %}
+    {% endwith %}
+
+
+    {% if submitted %}
+
+        <section class="card success">
+
+            <div class="check">✓</div>
+
+            <h2>Payment submitted successfully</h2>
+
+            <p class="muted">
+                Your payment has been recorded.
+            </p>
+
+            <strong>
+                Record ID: #{{ record_id }}
+            </strong>
+
+            <br><br>
+
+            <a class="btn" href="{{ url_for('user') }}">
+                Submit another
+            </a>
+
+        </section>
+
+    {% else %}
+
+        <form
+            class="card"
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            <label for="payment_image">
+                Payment Screenshot
+            </label>
+
+            <input
+                id="payment_image"
+                type="file"
+                name="payment_image"
+                accept="image/png,image/jpeg,image/webp"
+                required
+            >
+
+            <label for="purchase">
+                What Did You Purchase?
+            </label>
+
+            <input
+                id="purchase"
+                type="text"
+                name="purchase"
+                placeholder="e.g. T-shirt, groceries, subscription"
+                required
+            >
+
+            <button
+                class="btn full"
+                type="submit"
+            >
+                Submit Payment
+            </button>
+
+        </form>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>
