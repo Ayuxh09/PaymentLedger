@@ -1,0 +1,7 @@
+Flask
+pandas
+openpyxl
+opencv-python-headless
+numpy
+pytesseract
+Werkzeug
